@@ -1,0 +1,19 @@
+normal_vector = np.array([1.0,-1.0,0.0])
+        # normalize normal vector (magnitude 1)
+        normal_vector /= np.linalg.norm(normal_vector)
+        i_hat_landing = np.array([1/normal_vector[0], -1/normal_vector[1], 0])
+        j_hat_landing = np.array([normal_vector[2]/normal_vector[1], -normal_vector[2]/normal_vector[0], -normal_vector[0]/normal_vector[1] - normal_vector[1]/normal_vector[0]])
+        i_hat_landing /= np.linalg.norm(i_hat_landing)
+        j_hat_landing /= np.linalg.norm(j_hat_landing)
+
+        conversion_i_hat = np.array([-normal_vector[2]/normal_vector[1], normal_vector[2]/normal_vector[1], normal_vector[0]/normal_vector[1] + normal_vector[1]/normal_vector[0]])
+        conversion_j_hat = np.array([1/normal_vector[0], -1/normal_vector[1], 0])
+        conversion_i_hat /= np.linalg.norm(conversion_i_hat)
+        conversion_j_hat /= np.linalg.norm(conversion_j_hat)
+
+        self.rotation_matrix = np.matmul(np.array([[i_hat_landing[0], j_hat_landing[0], normal_vector[0]],
+                                         [i_hat_landing[1], j_hat_landing[1], normal_vector[1]],
+                                         [i_hat_landing[2],  j_hat_landing[2],normal_vector[2]]]), 
+                                         np.array([[conversion_i_hat[0], conversion_j_hat[0], normal_vector[0]],
+                                                  [conversion_i_hat[1], conversion_j_hat[1], normal_vector[1]],
+                                                  [conversion_i_hat[2], conversion_j_hat[2], normal_vector[2]]]))
